@@ -165,14 +165,14 @@ export default function Header({ onToggleMobileSidebar }: { onToggleMobileSideba
             <img
               src="/logo.gif"
               alt="EnterCollab"
-              className="w-10 h-10 rounded-xl shadow-sm border border-slate-100/30 bg-white object-cover p-1"
+              className="h-10  object-cover p-1"
               onError={(e) => {
                 const t = e.target as HTMLImageElement;
                 t.onerror = null;
-                t.src = '/favicon-32x32.png';
+                t.src = '/logo.gif';
               }}
             />
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full border-2 border-white shadow-lg" />
+            
           </div>
           <div>
             <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 text-transparent bg-clip-text leading-tight">

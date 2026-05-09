@@ -24,6 +24,19 @@ export default function Login() {
     }
   };
 
+  const handleTestLogin = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      await login('test@test.edu', '123456');
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Test account login failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-md mx-auto">
       <div className="text-center mb-8">
@@ -60,6 +73,19 @@ export default function Login() {
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
+
+        <div className="mt-6 pt-6 border-t border-gray-100">
+          <button
+            type="button"
+            onClick={handleTestLogin}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-100 transition-colors disabled:opacity-50"
+          >
+            <i className="fa-solid fa-vial text-indigo-500" />
+            Sign in as Test User
+          </button>
+          <p className="mt-2 text-center text-[11px] text-gray-400">For internal testing team only</p>
+        </div>
       </div>
 
       <div className="mt-8 space-y-3 text-center text-sm text-gray-600">
