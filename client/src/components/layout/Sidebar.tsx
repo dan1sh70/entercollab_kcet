@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useSocket } from '../../hooks/useSocket';
 import api from '../../lib/api';
 
 const LAST_SEEN_MESSAGES_KEY = 'ic:last-seen-messages-at';
+const TOPICS = [
+  { name: 'Coding', icon: 'fa-code', bgColor: 'bg-slate-900', path: '/projects?tag=Coding' },
+  { name: 'UI/UX', icon: 'fa-pen-nib', bgColor: 'bg-white border border-slate-200', path: '/projects?tag=UI/UX' },
+  { name: 'Robotics', icon: 'fa-robot', bgColor: 'bg-white border border-slate-200', path: '/projects?tag=Robotics' },
+];
 
 function getLastSeenMessagesAt(): number {
   const raw = localStorage.getItem(LAST_SEEN_MESSAGES_KEY);
@@ -18,10 +23,12 @@ function setLastSeenMessagesAt(value: number) {
 
 export default function Sidebar() {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { user } = useAuth();
   const { on } = useSocket();
   const [messagesBadgeCount, setMessagesBadgeCount] = useState(0);
   const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + '/');
+  const activeTag = searchParams.get('tag');
 
   const refreshMessagesBadge = async () => {
     if (!user?.id) {
@@ -133,34 +140,45 @@ export default function Sidebar() {
           <button className="text-slate-400 transition-colors hover:text-slate-600"><i className="fa-solid fa-plus" /></button>
         </div>
         <div className="space-y-2">
-          <Link to="/projects?tag=Coding" className="flex items-center justify-between bg-white px-4 py-3 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors group">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-slate-900 group-hover:bg-indigo-600 transition-colors flex items-center justify-center text-white text-xs">
-                <i className="fa-solid fa-code" />
-              </div>
-              <span className="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors">Coding</span>
-            </div>
-            <div className="flex gap-1">
-              <span className="w-2 h-2 rounded-full bg-slate-200" />
-              <span className="w-2 h-2 rounded-full bg-indigo-500" />
-            </div>
-          </Link>
-          <Link to="/projects?tag=UI/UX" className="flex items-center justify-between bg-white px-4 py-3 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors group">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-600 text-xs group-hover:border-indigo-200 group-hover:text-indigo-600 transition-colors">
-                <i className="fa-solid fa-pen-nib" />
-              </div>
-              <span className="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors">UI/UX</span>
-            </div>
-          </Link>
-          <Link to="/projects?tag=Robotics" className="flex items-center justify-between bg-white px-4 py-3 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors group">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-600 text-xs group-hover:border-indigo-200 group-hover:text-indigo-600 transition-colors">
-                <i className="fa-solid fa-robot" />
-              </div>
-              <span className="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors">Robotics</span>
-            </div>
-          </Link>
+          {TOPICS.map((topic) => {
+            const isSelected = activeTag === topic.name;
+            return (
+              <Link
+                key={topic.name}
+                to={topic.path}
+                className={`flex items-center justify-between px-4 py-3 rounded-2xl border transition-all duration-300 group ${
+                  isSelected
+                    ? 'bg-indigo-50 border-indigo-200 shadow-sm shadow-indigo-100'
+                    : 'bg-white border-slate-100/50 hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all duration-300 ${
+                      isSelected
+                        ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-200'
+                        : topic.bgColor + ' text-slate-600 group-hover:text-indigo-600'
+                    }`}
+                  >
+                    <i className={`fa-solid ${topic.icon}`} />
+                  </div>
+                  <span
+                    className={`font-bold text-sm transition-colors duration-300 ${
+                      isSelected ? 'text-indigo-600' : 'text-slate-700 group-hover:text-indigo-600'
+                    }`}
+                  >
+                    {topic.name}
+                  </span>
+                </div>
+                {isSelected && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-indigo-600">Active</span>
+                    <i className="fa-solid fa-check text-indigo-600 text-xs" />
+                  </div>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </nav>

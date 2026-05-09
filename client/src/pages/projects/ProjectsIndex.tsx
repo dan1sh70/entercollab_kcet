@@ -75,6 +75,27 @@ export default function ProjectsIndex() {
               </div>
             </div>
 
+            {/* Active Filters - Tag */}
+            {searchParams.get('tag') && (
+              <div className="mb-4 flex items-center gap-3 rounded-xl border border-indigo-200 bg-indigo-50/50 px-4 py-3">
+                <div className="flex items-center gap-2 flex-1">
+                  <i className="fa-solid fa-filter text-indigo-600 text-sm" />
+                  <span className="text-sm font-medium text-slate-700">Filtering by topic:</span>
+                  <span className="inline-flex items-center gap-2 rounded-lg border border-indigo-200 bg-white px-3 py-1 text-sm font-bold text-indigo-600 shadow-sm">
+                    <i className="fa-solid fa-tag text-xs" />
+                    {searchParams.get('tag')}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setSearchParams({})}
+                  className="ml-auto flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-indigo-600 transition-colors hover:bg-indigo-100"
+                >
+                  <i className="fa-solid fa-xmark" />
+                  Clear Filter
+                </button>
+              </div>
+            )}
+
             {/* Search Bar */}
             <div className="pb-6">
               <div className="relative group">
@@ -106,6 +127,28 @@ export default function ProjectsIndex() {
                     <label key={cat} className="flex items-center group cursor-pointer">
                       <input type="checkbox" className="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
                       <span className="ml-2.5 text-sm text-slate-600 group-hover:text-slate-900">{cat}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="page-section">
+                <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">Topics</h3>
+                <div className="space-y-2.5">
+                  {['Coding', 'UI/UX', 'Robotics'].map((topic) => (
+                    <label key={topic} className="flex items-center group cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="topic" 
+                        checked={searchParams.get('tag') === topic}
+                        onChange={() => {
+                          const params = new URLSearchParams(searchParams);
+                          params.set('tag', topic);
+                          setSearchParams(params);
+                        }}
+                        className="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" 
+                      />
+                      <span className="ml-2.5 text-sm text-slate-600 group-hover:text-slate-900">{topic}</span>
                     </label>
                   ))}
                 </div>
