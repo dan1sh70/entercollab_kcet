@@ -9,6 +9,22 @@ export default function Rightbar() {
   const { user, logout } = useAuth();
   const [stats, setStats] = useState({ projects: 0, following: 0, followers: 0 });
   const [suggestedUsers, setSuggestedUsers] = useState<any[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const refreshSuggestedUsers = async () => {
+    if (!user || refreshing) return;
+    setRefreshing(true);
+    try {
+      const res = await api.get('/feed');
+      if (res.data.recommendedUsers) {
+        setSuggestedUsers(res.data.recommendedUsers.slice(0, 3));
+      }
+    } catch {
+      /* ignore */
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -117,7 +133,17 @@ export default function Rightbar() {
       {/* Connect with Others */}
       {suggestedUsers.length > 0 && (
         <div className="panel-surface p-5">
-          <h3 className="font-bold text-slate-800 text-sm mb-4">Connect with Others</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-bold text-slate-800 text-sm">Connect with Others</h3>
+            <button
+              onClick={refreshSuggestedUsers}
+              disabled={refreshing}
+              className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+              title="Refresh suggestions"
+            >
+              <i className={`fa-solid fa-refresh text-slate-400 text-xs group-hover:text-indigo-600 transition-colors ${refreshing ? 'animate-spin' : ''}`} />
+            </button>
+          </div>
           <div className="space-y-3">
             {suggestedUsers.map((person) => (
               <div key={person.id} className="flex items-center gap-3">
