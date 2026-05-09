@@ -172,6 +172,8 @@ export default function Dashboard() {
                 </div>
               )}
             </div>
+          ))
+        )}
 
             {/* Right Sidebar */}
             <aside className="hidden xl:block w-80 flex-shrink-0 space-y-6">
