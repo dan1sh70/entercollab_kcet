@@ -10,16 +10,9 @@ import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { createVerificationCode, verifyCode } from '../services/verification.js';
 import { sendVerificationEmail } from '../services/email.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const uploadsDir = path.join(__dirname, '../../../uploads/images/profiles');
-fs.mkdirSync(uploadsDir, { recursive: true });
+import { profileStorage } from '../config/cloudinary.js';
 
-const storage = multer.diskStorage({
-  destination: uploadsDir,
-  filename: (_req, file, cb) => cb(null, `${Date.now()}_${Math.random().toString(36).slice(2)}${path.extname(file.originalname)}`),
-});
-const upload = multer({ storage, limits: { fileSize: 2 * 1024 * 1024 } });
+const upload = multer({ storage: profileStorage, limits: { fileSize: 2 * 1024 * 1024 } });
 
 const router = Router();
 
@@ -122,7 +115,7 @@ router.patch('/complete-profile', authMiddleware, upload.single('profile_photo')
     if (skills !== undefined) data.skills = skills;
     if (institution_kind) data.institutionKind = institution_kind;
     if (website !== undefined) data.website = website;
-    if (req.file) data.profilePhotoPath = `/uploads/images/profiles/${req.file.filename}`;
+    if (req.file) data.profilePhotoPath = req.file.path;
 
     if (description && req.user!.managedCollegeId) {
       await prisma.college.update({

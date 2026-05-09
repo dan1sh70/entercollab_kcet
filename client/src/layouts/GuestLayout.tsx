@@ -14,8 +14,18 @@ export default function GuestLayout() {
       <header className="sticky top-0 z-20 border-b border-white/70 bg-white/70 backdrop-blur-xl">
         <div className="page-shell flex h-16 items-center justify-between py-0">
           <Link to="/" className="flex items-center gap-2.5 text-sm font-semibold text-slate-900 sm:text-base">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm">
-              <span className="text-lg font-bold text-indigo-600">EC</span>
+            <div className="relative">
+              <img
+                src="/logo.gif"
+                alt="EnterCollab"
+                className="h-16 object-cover p-1"
+                onError={(e) => {
+                  const t = e.target as HTMLImageElement;
+                  t.onerror = null;
+                  t.src = '/logo.gif';
+                }}
+              />
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full border-2 border-white shadow-lg" />
             </div>
             EnterCollab
           </Link>

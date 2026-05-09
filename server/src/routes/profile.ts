@@ -7,16 +7,9 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const uploadsDir = path.join(__dirname, '../../../uploads/images/profiles');
-fs.mkdirSync(uploadsDir, { recursive: true });
+import { profileStorage } from '../config/cloudinary.js';
 
-const storage = multer.diskStorage({
-  destination: uploadsDir,
-  filename: (_req, file, cb) => cb(null, `${Date.now()}_${Math.random().toString(36).slice(2)}${path.extname(file.originalname)}`),
-});
-const upload = multer({ storage, limits: { fileSize: 2 * 1024 * 1024 } });
+const upload = multer({ storage: profileStorage, limits: { fileSize: 2 * 1024 * 1024 } });
 
 const router = Router();
 
@@ -59,7 +52,7 @@ router.patch('/', authMiddleware, upload.single('profile_photo'), async (req: Au
     }
 
     if (req.file) {
-      data.profilePhotoPath = `/uploads/images/profiles/${req.file.filename}`;
+      data.profilePhotoPath = req.file.path;
     }
 
     const user = await prisma.user.update({ where: { id: req.user!.id }, data });

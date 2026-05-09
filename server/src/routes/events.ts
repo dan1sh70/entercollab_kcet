@@ -6,16 +6,9 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const uploadsDir = path.join(__dirname, '../../../uploads/images/events');
-fs.mkdirSync(uploadsDir, { recursive: true });
+import { eventStorage } from '../config/cloudinary.js';
 
-const storage = multer.diskStorage({
-  destination: uploadsDir,
-  filename: (_req, file, cb) => cb(null, `${Date.now()}_${Math.random().toString(36).slice(2)}${path.extname(file.originalname)}`),
-});
-const upload = multer({ storage, limits: { fileSize: 2 * 1024 * 1024 } });
+const upload = multer({ storage: eventStorage, limits: { fileSize: 2 * 1024 * 1024 } });
 
 const router = Router();
 
@@ -54,7 +47,7 @@ router.post('/', authMiddleware, upload.single('image'), async (req: AuthRequest
       eventDate: new Date(event_date), type,
     };
     if (max_attendees) data.maxAttendees = parseInt(max_attendees);
-    if (req.file) data.image = `/uploads/images/events/${req.file.filename}`;
+    if (req.file) data.image = req.file.path;
 
     const event = await prisma.event.create({ data });
     res.json({ success: true, event });
@@ -97,7 +90,7 @@ router.patch('/:id', authMiddleware, upload.single('image'), async (req: AuthReq
     if (max_attendees) data.maxAttendees = parseInt(max_attendees);
     if (type) data.type = type;
     if (status) data.status = status;
-    if (req.file) data.image = `/uploads/images/events/${req.file.filename}`;
+    if (req.file) data.image = req.file.path;
 
     const updated = await prisma.event.update({ where: { id: event.id }, data });
     res.json({ success: true, event: updated });

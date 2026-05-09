@@ -82,7 +82,7 @@ export default function Header({ onToggleMobileSidebar }: { onToggleMobileSideba
         setNotifications(res.data.notifications);
         setUnreadCount(res.data.unread_count);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   useEffect(() => {
@@ -165,14 +165,14 @@ export default function Header({ onToggleMobileSidebar }: { onToggleMobileSideba
             <img
               src="/logo.gif"
               alt="EnterCollab"
-              className="h-10  object-cover p-1"
+              className="h-16  object-cover p-1"
               onError={(e) => {
                 const t = e.target as HTMLImageElement;
                 t.onerror = null;
                 t.src = '/logo.gif';
               }}
             />
-            
+
           </div>
           <div>
             <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 text-transparent bg-clip-text leading-tight">
@@ -334,46 +334,46 @@ export default function Header({ onToggleMobileSidebar }: { onToggleMobileSideba
             {profileOpen && (
               <div className="absolute right-0 top-full z-[60] w-56 pt-2 sm:w-60">
                 <div className="overflow-hidden rounded-xl border border-slate-100 bg-white py-1 shadow-xl shadow-slate-900/10">
-                <div className="border-b border-slate-50 px-3 py-2.5">
-                  <p className="truncate text-sm font-semibold text-slate-900">{user?.name || 'Account'}</p>
-                  <p className="truncate text-xs text-slate-500">{user?.email}</p>
-                </div>
-                <Link
-                  to="/profile"
-                  className="flex items-center gap-3 px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50"
-                  onClick={() => {
-                    clearProfileLeaveTimer();
-                    setProfileOpen(false);
-                  }}
-                >
-                  <i className="fa-regular fa-user w-4 text-center text-slate-400" />
-                  My profile
-                </Link>
-                <Link
-                  to="/profile/edit"
-                  className="flex items-center gap-3 px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50"
-                  onClick={() => {
-                    clearProfileLeaveTimer();
-                    setProfileOpen(false);
-                  }}
-                >
-                  <i className="fa-solid fa-gear w-4 text-center text-slate-400" />
-                  Settings
-                </Link>
-                <div className="my-1 border-t border-slate-100" />
-                <button
-                  type="button"
-                  className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm text-red-600 transition-colors hover:bg-red-50"
-                  onClick={() => {
-                    clearProfileLeaveTimer();
-                    setProfileOpen(false);
-                    logout();
-                    navigate('/login');
-                  }}
-                >
-                  <i className="fa-solid fa-arrow-right-from-bracket w-4 text-center" />
-                  Log out
-                </button>
+                  <div className="border-b border-slate-50 px-3 py-2.5">
+                    <p className="truncate text-sm font-semibold text-slate-900">{user?.name || 'Account'}</p>
+                    <p className="truncate text-xs text-slate-500">{user?.email}</p>
+                  </div>
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50"
+                    onClick={() => {
+                      clearProfileLeaveTimer();
+                      setProfileOpen(false);
+                    }}
+                  >
+                    <i className="fa-regular fa-user w-4 text-center text-slate-400" />
+                    My profile
+                  </Link>
+                  <Link
+                    to="/profile/edit"
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-50"
+                    onClick={() => {
+                      clearProfileLeaveTimer();
+                      setProfileOpen(false);
+                    }}
+                  >
+                    <i className="fa-solid fa-gear w-4 text-center text-slate-400" />
+                    Settings
+                  </Link>
+                  <div className="my-1 border-t border-slate-100" />
+                  <button
+                    type="button"
+                    className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm text-red-600 transition-colors hover:bg-red-50"
+                    onClick={() => {
+                      clearProfileLeaveTimer();
+                      setProfileOpen(false);
+                      logout();
+                      navigate('/login');
+                    }}
+                  >
+                    <i className="fa-solid fa-arrow-right-from-bracket w-4 text-center" />
+                    Log out
+                  </button>
                 </div>
               </div>
             )}

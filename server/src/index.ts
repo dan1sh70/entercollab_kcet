@@ -5,12 +5,18 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config(); // Load from CWD
+dotenv.config({ path: path.resolve(__dirname, '../../.env') }); // Fallback for local monorepo dev
 
 import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+
+const app = express();
+const httpServer = createServer(app);
+
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 import authRoutes from './routes/auth.js';
 import dashboardRoutes from './routes/dashboard.js';
@@ -30,17 +36,20 @@ import kanbanRoutes from './routes/kanban.js';
 import { setupSocket } from './socket/index.js';
 import { setNotificationIo } from './services/notificationService.js';
 
-const app = express();
-const httpServer = createServer(app);
-
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.NODE_ENV === 'production' ? false : 'http://localhost:5173',
+    origin: process.env.NODE_ENV === 'production' ? frontendUrl : 'http://localhost:5173',
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(
+  cors({
+    origin: process.env.NODE_ENV === 'production' ? frontendUrl : 'http://localhost:5173',
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -6,16 +6,9 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const uploadsDir = path.join(__dirname, '../../../uploads/files/research');
-fs.mkdirSync(uploadsDir, { recursive: true });
+import { researchStorage } from '../config/cloudinary.js';
 
-const storage = multer.diskStorage({
-  destination: uploadsDir,
-  filename: (_req, file, cb) => cb(null, `${Date.now()}_${Math.random().toString(36).slice(2)}${path.extname(file.originalname)}`),
-});
-const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({ storage: researchStorage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 const router = Router();
 
@@ -65,7 +58,7 @@ router.post('/', authMiddleware, upload.single('file'), async (req: AuthRequest,
     };
     if (doi) data.doi = doi;
     if (publication_date) data.publicationDate = new Date(publication_date);
-    if (req.file) data.filePath = `/uploads/files/research/${req.file.filename}`;
+    if (req.file) data.filePath = req.file.path;
 
     const paper = await prisma.researchPaper.create({ data });
     res.json({ success: true, paper });
@@ -101,7 +94,7 @@ router.patch('/:id', authMiddleware, upload.single('file'), async (req: AuthRequ
     if (doi !== undefined) data.doi = doi;
     if (publication_date) data.publicationDate = new Date(publication_date);
     if (status) data.status = status;
-    if (req.file) data.filePath = `/uploads/files/research/${req.file.filename}`;
+    if (req.file) data.filePath = req.file.path;
 
     const updated = await prisma.researchPaper.update({ where: { id: paper.id }, data });
     res.json({ success: true, paper: updated });

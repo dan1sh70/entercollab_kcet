@@ -203,8 +203,18 @@ export default function Welcome() {
       <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 font-semibold text-gray-900 group">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border border-gray-200 bg-white flex items-center justify-center p-1 group-hover:border-indigo-300 transition-colors">
-              <span className="text-indigo-600 font-bold">EC</span>
+            <div className="relative">
+              <img
+                src="/logo.gif"
+                alt="EnterCollab"
+                className="h-16 object-cover p-1"
+                onError={(e) => {
+                  const t = e.target as HTMLImageElement;
+                  t.onerror = null;
+                  t.src = '/logo.gif';
+                }}
+              />
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full border-2 border-white shadow-lg" />
             </div>
             EnterCollab
           </Link>
@@ -586,8 +596,18 @@ export default function Welcome() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             <div>
               <div className="flex items-center gap-2.5 font-semibold text-gray-900 mb-4">
-                <div className="w-8 h-8 rounded-lg border border-gray-200 bg-white flex items-center justify-center">
-                  <span className="text-indigo-600 font-bold text-sm">EC</span>
+                <div className="relative">
+                  <img
+                    src="/logo.gif"
+                    alt="EnterCollab"
+                    className="h-14 object-cover p-1"
+                    onError={(e) => {
+                      const t = e.target as HTMLImageElement;
+                      t.onerror = null;
+                      t.src = '/logo.gif';
+                    }}
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full border-2 border-white shadow-lg" />
                 </div>
                 EnterCollab
               </div>

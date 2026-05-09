@@ -5,8 +5,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function resolveUrl(path: string | null | undefined): string {
+  if (!path) return '';
+  if (path.startsWith('http') || path.startsWith('data:')) return path;
+  
+  const baseUrl = import.meta.env.VITE_API_URL || '';
+  // Ensure path starts with a slash if not present
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${baseUrl}${normalizedPath}`;
+}
+
 export function avatarUrl(name: string, photoPath?: string | null): string {
-  if (photoPath) return photoPath;
+  if (photoPath) return resolveUrl(photoPath);
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6366f1&color=ffffff`;
 }
 

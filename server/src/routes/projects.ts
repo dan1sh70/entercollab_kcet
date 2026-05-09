@@ -15,16 +15,9 @@ import {
 } from '../services/notificationService.js';
 import { syncProjectChatMembers } from '../services/chatRoomMembers.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const uploadsDir = path.join(__dirname, '../../../uploads/images/projects');
-fs.mkdirSync(uploadsDir, { recursive: true });
+import { projectStorage } from '../config/cloudinary.js';
 
-const storage = multer.diskStorage({
-  destination: uploadsDir,
-  filename: (_req, file, cb) => cb(null, `${Date.now()}_${Math.random().toString(36).slice(2)}${path.extname(file.originalname)}`),
-});
-const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+const upload = multer({ storage: projectStorage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 const router = Router();
 
@@ -102,7 +95,7 @@ router.post('/', authMiddleware, upload.single('image'), async (req: AuthRequest
     }
 
     const tagsArr = tags ? (Array.isArray(tags) ? tags : JSON.parse(tags)) : [];
-    const imagePath = req.file ? `/uploads/images/projects/${req.file.filename}` : null;
+    const imagePath = req.file ? req.file.path : null;
 
     const project = await prisma.post.create({
       data: {
@@ -188,7 +181,7 @@ router.patch('/:id', authMiddleware, upload.single('image'), async (req: AuthReq
       const tagsArr = Array.isArray(tags) ? tags : tags.split(',').map((t: string) => t.trim());
       data.tags = JSON.stringify(tagsArr.map((t: string) => `#${t.replace(/^#/, '')}`));
     }
-    if (req.file) data.image = `/uploads/images/projects/${req.file.filename}`;
+    if (req.file) data.image = req.file.path;
 
     const updated = await prisma.post.update({ where: { id: project.id }, data });
     res.json({ success: true, project: updated });

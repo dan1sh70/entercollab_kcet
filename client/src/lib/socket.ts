@@ -4,7 +4,7 @@ let socket: Socket | null = null;
 
 export function getSocket(): Socket {
   if (!socket) {
-    socket = io('/', {
+    socket = io(import.meta.env.VITE_API_URL || '/', {
       auth: { token: localStorage.getItem('token') },
       autoConnect: false,
       transports: ['websocket', 'polling'],
@@ -13,6 +13,7 @@ export function getSocket(): Socket {
       reconnectionDelay: 200,
       reconnectionDelayMax: 2000,
       timeout: 10000,
+      path: '/socket.io', // Explicitly set path
     });
   }
   return socket;
