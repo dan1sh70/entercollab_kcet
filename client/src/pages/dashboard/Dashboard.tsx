@@ -47,33 +47,38 @@ export default function Dashboard() {
   if (loading) return <div className="flex items-center justify-center h-64"><div className="text-gray-400">Loading feed...</div></div>;
 
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar p-6 space-y-8">
-      {/* Greeting & Post Input */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100">
-          <div className="flex items-center gap-4">
-            <img src={avatarUrl(user?.name || '', user?.profilePhotoPath)} className="w-12 h-12 rounded-full object-cover" />
-            <div>
-              <h2 className="text-lg font-bold text-slate-900">Good afternoon, {user?.name?.split(' ')[0]}.</h2>
-              <p className="text-sm text-slate-500">Ready to collaborate?</p>
+    <div className="h-full overflow-y-auto custom-scrollbar">
+      <div className="min-h-full pb-20">
+        {/* Header */}
+        <div className="sticky top-0 z-30 border-b border-white/70 bg-white/75 backdrop-blur-xl">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex items-center gap-4">
+              <img src={avatarUrl(user?.name || '', user?.profilePhotoPath)} className="w-14 h-14 rounded-full object-cover" />
+              <div>
+                <h1 className="page-title">Good afternoon, {user?.name?.split(' ')[0]}.</h1>
+                <p className="page-subtitle">Ready to collaborate?</p>
+              </div>
             </div>
           </div>
-          <button className="text-slate-400 hover:text-slate-600"><i className="fa-solid fa-ellipsis" /></button>
         </div>
 
-        <Link to="/projects/create" className="block w-full">
-          <div className="bg-white rounded-[2rem] p-2 shadow-sm border border-slate-100 flex items-center gap-2 pl-4 cursor-pointer hover:bg-slate-50 transition-colors">
-            <div className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
-              <i className="fa-solid fa-pen-nib text-sm" />
-            </div>
-            <div className="flex-1 text-sm text-slate-400">Share an update or start a new project...</div>
-            <button className="px-6 py-2 bg-[#1e293b] text-white font-bold rounded-xl hover:bg-slate-800 transition-colors">Post</button>
-          </div>
-        </Link>
-      </div>
+        {/* Main Content */}
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 mt-8">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Feed Content */}
+            <div className="flex-1 min-w-0 space-y-8">
+              {/* Post Input */}
+              <Link to="/projects/create" className="block">
+                <div className="bg-white rounded-[2rem] p-4 shadow-sm border border-slate-100 flex items-center gap-3 cursor-pointer hover:bg-slate-50 transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 flex-shrink-0">
+                    <i className="fa-solid fa-pen-nib text-sm" />
+                  </div>
+                  <div className="flex-1 text-sm text-slate-400">Share an update or start a new project...</div>
+                  <button className="px-6 py-2.5 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors flex-shrink-0">Post</button>
+                </div>
+              </Link>
 
-      {/* Feed */}
-      <div className="space-y-8 pb-20">
+              {/* Feed */}
         {projects.length === 0 ? (
           <div className="bg-white rounded-[2rem] p-12 text-center border border-dashed border-slate-300">
             <i className="fa-solid fa-layer-group text-4xl text-slate-300 mb-4" />
@@ -169,6 +174,9 @@ export default function Dashboard() {
             </div>
           ))
         )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

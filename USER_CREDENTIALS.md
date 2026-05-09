@@ -10,7 +10,7 @@ All seeded accounts use the same password:
 
 | Role | Name | Email | Password |
 |---|---|---|---|
-| Admin | Admin User | admin@intercollab.app | password |
+| Admin | Admin User | admin@entercollab.app | password |
 | Student | Dr. Sarah Johnson | sarah.johnson@stanford.edu | password |
 | Student | Prof. Michael Chen | michael.chen@mit.edu | password |
 | Student | Emily Rodriguez | emily.r@harvard.edu | password |

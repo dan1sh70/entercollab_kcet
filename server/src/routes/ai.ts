@@ -1,28 +1,9 @@
 import { Router, Response } from 'express';
 import prisma from '../config/database.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
+import { callOpenAI } from '../services/ai.js';
 
 const router = Router();
-
-async function callOpenAI(messages: { role: string; content: string }[]): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  const model = process.env.OPENAI_MODEL || 'gpt-4o';
-
-  if (!apiKey || apiKey === 'your-openai-api-key') {
-    const lastMsg = messages[messages.length - 1]?.content || '';
-    return `[MOCK AI RESPONSE] Received: "${lastMsg}". Configure OPENAI_API_KEY for real responses.`;
-  }
-
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({ model, messages, temperature: 0.7 }),
-  });
-
-  if (!res.ok) throw new Error('AI Service Unavailable');
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content || '';
-}
 
 router.post('/chat/:roomId', authMiddleware, async (req: AuthRequest, res: Response) => {
   try {
@@ -35,10 +16,10 @@ router.post('/chat/:roomId', authMiddleware, async (req: AuthRequest, res: Respo
 
     try {
       const content = await callOpenAI([
-        { role: 'system', content: 'You are InterCollab AI, a helpful assistant for university collaboration projects.' },
+        { role: 'system', content: 'You are EnterCollab AI, a helpful assistant for university collaboration projects.' },
         { role: 'user', content: message },
       ]);
-      await prisma.aIResponse.create({ data: { aiRequestId: aiReq.id, content, modelUsed: process.env.OPENAI_MODEL || 'gpt-4o' } });
+      await prisma.aIResponse.create({ data: { aiRequestId: aiReq.id, content, modelUsed: 'minimaxai/minimax-m2.7' } });
       await prisma.aIRequest.update({ where: { id: aiReq.id }, data: { status: 'completed' } });
       res.json({ status: 'completed', response: content });
     } catch (err: any) {
@@ -63,7 +44,7 @@ router.post('/summarize', authMiddleware, async (req: AuthRequest, res: Response
       const content = await callOpenAI([
         { role: 'user', content: `Summarize the following text concisely:\n\n${text}` },
       ]);
-      await prisma.aIResponse.create({ data: { aiRequestId: aiReq.id, content, modelUsed: process.env.OPENAI_MODEL || 'gpt-4o' } });
+      await prisma.aIResponse.create({ data: { aiRequestId: aiReq.id, content, modelUsed: 'minimaxai/minimax-m2.7' } });
       await prisma.aIRequest.update({ where: { id: aiReq.id }, data: { status: 'completed' } });
       res.json({ status: 'completed', response: content });
     } catch (err: any) {

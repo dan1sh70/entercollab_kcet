@@ -6,27 +6,80 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: 'Outfit', sans-serif;
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-slate-50 text-slate-900 antialiased;
+    background-image:
+      radial-gradient(circle at top left, rgba(99, 102, 241, 0.08), transparent 32%),
+      radial-gradient(circle at top right, rgba(168, 85, 247, 0.07), transparent 28%),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.96));
+    background-attachment: fixed;
+  }
+
+  #root {
+    min-height: 100vh;
   }
 }
 
 @layer components {
+  .app-shell {
+    @apply text-slate-900;
+  }
+
+  .page-shell {
+    @apply mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8 py-4 sm:py-6;
+  }
+
+  .page-surface {
+    @apply overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.35)] backdrop-blur-xl;
+  }
+
+  .panel-surface {
+    @apply rounded-3xl border border-slate-200/80 bg-white/90 shadow-sm backdrop-blur-xl;
+  }
+
+  .page-toolbar {
+    @apply panel-surface px-4 py-4 sm:px-6;
+  }
+
+  .page-title {
+    @apply text-xl sm:text-2xl font-bold tracking-tight text-slate-900;
+  }
+
+  .page-subtitle {
+    @apply mt-1 text-sm leading-relaxed text-slate-500;
+  }
+
+  .page-section {
+    @apply panel-surface p-4 sm:p-6;
+  }
+
+  .empty-state {
+    @apply panel-surface px-6 py-14 text-center;
+  }
+
+  .soft-divider {
+    @apply border-slate-200/80;
+  }
+
   .glass-card {
-    @apply bg-white border border-gray-200 transition-all duration-200;
+    @apply panel-surface transition-all duration-200;
   }
 
   .btn-primary {
-    @apply px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 font-medium text-white transition-colors duration-200 hover:bg-slate-800;
   }
 
   .btn-secondary {
-    @apply px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg border border-gray-200 transition-colors duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 font-medium text-slate-700 transition-colors duration-200 hover:bg-slate-50;
   }
 
   .input-field {
-    @apply w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none;
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10;
   }
 }
 

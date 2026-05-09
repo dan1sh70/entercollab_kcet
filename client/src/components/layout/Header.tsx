@@ -169,7 +169,7 @@ export default function Header({ onToggleMobileSidebar }: { onToggleMobileSideba
           </div>
           <div>
             <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 text-transparent bg-clip-text leading-tight">
-              InterCollab
+              EnterCollab
             </h1>
             <p className="hidden sm:block text-xs text-slate-500 font-medium">Ideas Beyond Borders</p>
           </div>
@@ -386,7 +386,7 @@ export default function Header({ onToggleMobileSidebar }: { onToggleMobileSideba
             type="search"
             value={searchQuery}
             onChange={(e) => onHeaderSearchChange(e.target.value)}
-            placeholder="Search InterCollab…"
+            placeholder="Search EnterCollab…"
             className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-full text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm transition-all duration-200 placeholder-slate-400"
           />
           <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />

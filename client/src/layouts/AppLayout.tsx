@@ -24,14 +24,17 @@ export default function AppLayout() {
   const isChatPage = location.pathname === '/chat';
 
   return (
-    <div className="font-sans antialiased text-gray-900 bg-gray-50">
+    <div className="app-shell relative min-h-screen overflow-x-hidden">
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,0.12),transparent_28%),radial-gradient(circle_at_top_right,rgba(168,85,247,0.10),transparent_26%),linear-gradient(to_bottom,rgba(248,250,252,1),rgba(255,255,255,0.96))]" />
+        <div className="absolute left-[8%] top-16 h-80 w-80 rounded-full bg-indigo-200/25 blur-3xl" />
+        <div className="absolute bottom-10 right-[8%] h-96 w-96 rounded-full bg-violet-200/20 blur-3xl" />
+      </div>
       <Toast />
       <Header onToggleMobileSidebar={() => setMobileSidebarOpen(!mobileSidebarOpen)} />
 
       <div
-        className={`mx-auto transition-all duration-300 ${
-          isChatPage ? 'max-w-full px-0 sm:px-3 lg:px-5 py-2 sm:py-3 lg:py-4' : 'max-w-7xl px-3 sm:px-4 lg:px-6 py-4 sm:py-6'
-        }`}
+        className={`page-shell transition-all duration-300 ${isChatPage ? 'max-w-full px-0 sm:px-3 lg:px-5 py-2 sm:py-3 lg:py-4' : ''}`}
       >
         <div className={`flex flex-col lg:flex-row relative ${isChatPage ? 'gap-3 lg:gap-5' : 'gap-6'}`}>
           {mobileSidebarOpen && (
@@ -42,7 +45,7 @@ export default function AppLayout() {
           )}
 
           <aside
-            className={`fixed inset-y-0 left-0 lg:sticky lg:inset-y-auto lg:bottom-auto lg:top-6 lg:self-start w-72 flex-shrink-0 transition-all duration-300 lg:block bg-white lg:bg-transparent z-40 ${
+            className={`fixed inset-y-0 left-0 lg:sticky lg:inset-y-auto lg:bottom-auto lg:top-6 lg:self-start w-72 flex-shrink-0 transition-all duration-300 lg:block bg-white/95 lg:bg-transparent backdrop-blur-md z-40 ${
               mobileSidebarOpen
                 ? 'translate-x-0 shadow-2xl z-50'
                 : '-translate-x-full lg:translate-x-0 shadow-none'
@@ -54,10 +57,10 @@ export default function AppLayout() {
           </aside>
 
           <main
-            className={`flex-1 min-w-0 bg-white overflow-hidden ${
+            className={`flex-1 min-w-0 page-surface ${
               isChatPage
-                ? 'flex flex-col min-h-0 h-[calc(100dvh-6.25rem)] sm:h-[calc(100vh-7.25rem)] lg:h-[calc(100vh-128px)] rounded-none border-0 shadow-none sm:rounded-2xl sm:border sm:border-gray-200 sm:shadow-sm pb-[calc(1rem+3.5rem+5px+env(safe-area-inset-bottom,0px))]'
-                : 'rounded-2xl border border-gray-200 shadow-sm min-h-[calc(100vh-140px)]'
+                ? 'flex flex-col min-h-0 h-[calc(100dvh-6.25rem)] sm:h-[calc(100vh-7.25rem)] lg:h-[calc(100vh-128px)] rounded-none border-0 shadow-none sm:rounded-3xl sm:border sm:border-slate-200/80 sm:shadow-sm pb-[calc(1rem+3.5rem+5px+env(safe-area-inset-bottom,0px))]'
+                : 'min-h-[calc(100vh-140px)]'
             }`}
           >
             <div

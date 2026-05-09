@@ -159,7 +159,7 @@ const AUDIENCES = [
 ];
 
 const FAQS = [
-  { q: 'Is InterCollab free?', a: 'Yes, completely. There are no paid tiers, no trial periods, and no feature gates. Everything is available to all users.' },
+  { q: 'Is EnterCollab free?', a: 'Yes, completely. There are no paid tiers, no trial periods, and no feature gates. Everything is available to all users.' },
   { q: 'Do I need a university email?', a: 'No. Any valid email works for student accounts. Institution accounts benefit from using an official domain for credibility, but it\'s not required.' },
   { q: 'Can I use it for non-academic projects?', a: 'Absolutely. While the platform is designed for academic collaboration, any project that benefits from team discovery and coordination is a great fit.' },
   { q: 'How does the AI assistant work?', a: 'The AI can summarize long chat threads, help brainstorm ideas, and extract actionable tasks from conversations. It uses OpenAI under the hood.' },
@@ -204,9 +204,9 @@ export default function Welcome() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 font-semibold text-gray-900 group">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border border-gray-200 bg-white flex items-center justify-center p-1 group-hover:border-indigo-300 transition-colors">
-              <span className="text-indigo-600 font-bold">IC</span>
+              <span className="text-indigo-600 font-bold">EC</span>
             </div>
-            InterCollab
+            EnterCollab
           </Link>
           <nav className="flex items-center gap-2 sm:gap-3 text-sm">
             <a href="#features" onClick={(e) => smoothScroll(e, 'features')} className="hidden md:inline-flex py-2 px-3 text-gray-500 hover:text-gray-900 font-medium transition-colors">Features</a>
@@ -443,13 +443,13 @@ export default function Welcome() {
         </div>
       </section>
 
-      {/* ── Why InterCollab ── */}
+      {/* ── Why EnterCollab ── */}
       <section className="py-20 sm:py-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <Reveal direction="left">
               <div>
-                <p className="text-sm font-semibold text-indigo-600 mb-2 tracking-wide uppercase">Why InterCollab</p>
+                <p className="text-sm font-semibold text-indigo-600 mb-2 tracking-wide uppercase">Why EnterCollab</p>
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Built different on purpose</h2>
                 <div className="space-y-5">
                   {[
@@ -478,7 +478,7 @@ export default function Welcome() {
                     <div className="w-3 h-3 rounded-full bg-red-300" />
                     <div className="w-3 h-3 rounded-full bg-amber-300" />
                     <div className="w-3 h-3 rounded-full bg-green-300" />
-                    <span className="text-xs text-gray-400 ml-2">intercollab.com/projects/climate-ai</span>
+                    <span className="text-xs text-gray-400 ml-2">entercollab.com/projects/climate-ai</span>
                   </div>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
@@ -587,9 +587,9 @@ export default function Welcome() {
             <div>
               <div className="flex items-center gap-2.5 font-semibold text-gray-900 mb-4">
                 <div className="w-8 h-8 rounded-lg border border-gray-200 bg-white flex items-center justify-center">
-                  <span className="text-indigo-600 font-bold text-sm">IC</span>
+                  <span className="text-indigo-600 font-bold text-sm">EC</span>
                 </div>
-                InterCollab
+                EnterCollab
               </div>
               <p className="text-sm text-gray-500 leading-relaxed">Open platform for cross-campus academic collaboration.</p>
             </div>
@@ -621,7 +621,7 @@ export default function Welcome() {
             </div>
           </div>
           <div className="border-t border-gray-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-xs text-gray-400">&copy; {new Date().getFullYear()} InterCollab &middot; Crafted with precision by Ordinmens</p>
+            <p className="text-xs text-gray-400">&copy; {new Date().getFullYear()} EnterCollab &middot; Crafted with precision by Ordinmens</p>
             <div className="flex items-center gap-4 text-gray-400">
               <a href="#" className="hover:text-gray-600 hover:scale-110 transition-all"><i className="fa-brands fa-github text-lg" /></a>
               <a href="#" className="hover:text-gray-600 hover:scale-110 transition-all"><i className="fa-brands fa-twitter text-lg" /></a>

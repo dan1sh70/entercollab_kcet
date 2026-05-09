@@ -116,13 +116,13 @@ export default function Explore() {
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto custom-scrollbar">
       <div className="border-b border-slate-100 bg-gradient-to-b from-indigo-50/80 to-white px-4 py-8 sm:px-8 lg:px-10">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto w-full max-w-[1600px]">
           <p className="text-sm font-semibold uppercase tracking-wider text-indigo-600">Explore</p>
           <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
             Find people, projects & more
           </h1>
           <p className="mt-2 max-w-xl text-sm text-slate-600">
-            Search across members, projects, research, and colleges — one place to discover everything on InterCollab.
+            Search across members, projects, research, and colleges — one place to discover everything on EnterCollab.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6">
@@ -161,7 +161,7 @@ export default function Explore() {
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-4 sm:px-8 lg:px-10">
+      <div className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-4 sm:px-8 lg:px-10">
         {!query.trim() && (
           <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 py-16 text-center">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/80">

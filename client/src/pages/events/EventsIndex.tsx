@@ -22,7 +22,7 @@ export default function EventsIndex() {
 
   return (
     <div className="h-full overflow-y-auto custom-scrollbar p-6">
-      <div className="max-w-7xl mx-auto py-4">
+      <div className="mx-auto w-full max-w-[1600px] py-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>

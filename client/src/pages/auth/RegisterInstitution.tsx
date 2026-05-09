@@ -254,7 +254,7 @@ export default function RegisterInstitution() {
                   Description <span className="text-red-400">*</span>
                 </label>
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4} required
-                  className="input-field resize-none" placeholder="Describe your institution, programmes, and what you're looking for on InterCollab..." />
+                  className="input-field resize-none" placeholder="Describe your institution, programmes, and what you're looking for on EnterCollab..." />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Website</label>

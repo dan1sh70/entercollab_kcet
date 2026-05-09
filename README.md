@@ -1,6 +1,6 @@
-# InterCollab
+# EnterCollab
 
-InterCollab is a full‑stack collaboration app with a **React + Vite** client and an **Express + Prisma** server (with **Socket.IO** realtime).
+EnterCollab is a full‑stack collaboration app with a **React + Vite** client and an **Express + Prisma** server (with **Socket.IO** realtime).
 
 ## Repo structure
 

@@ -1,6 +1,6 @@
-# Intercollab project overview
+# EnterCollab project overview
 
-Workspace: `d:\intercollab\collab-node`
+Workspace: `d:\Enter Colab _ KCET`
 
 ## Summary
 
@@ -48,7 +48,7 @@ Root scripts orchestrate running/building both via `concurrently`.
 
 ## Project structure (key folders/files)
 
-### Root (`d:\intercollab\collab-node`)
+### Root (`d:\Enter Colab _ KCET`)
 - `package.json` — workspaces and top-level scripts
 - `package-lock.json` — npm lockfile exists
 - `node_modules/` — installed deps; largest disk consumer

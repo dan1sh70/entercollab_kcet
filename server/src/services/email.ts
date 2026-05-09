@@ -30,14 +30,14 @@ export async function sendVerificationEmail(to: string, code: string) {
   const t = await getTransporter();
 
   const info = await t.sendMail({
-    from: process.env.MAIL_FROM || '"InterCollab" <noreply@intercollab.com>',
+    from: process.env.MAIL_FROM || '"EnterCollab" <noreply@entercollab.com>',
     to,
-    subject: `${code} is your InterCollab verification code`,
+    subject: `${code} is your EnterCollab verification code`,
     text: `Your verification code is: ${code}\n\nThis code expires in 10 minutes.\n\nIf you didn't request this, please ignore this email.`,
     html: `
       <div style="font-family:'Outfit',system-ui,sans-serif;max-width:440px;margin:0 auto;padding:32px 0">
         <div style="text-align:center;margin-bottom:28px">
-          <span style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border-radius:10px;font-weight:700;color:#4f46e5;font-size:16px">InterCollab</span>
+          <span style="display:inline-block;padding:6px 14px;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border-radius:10px;font-weight:700;color:#4f46e5;font-size:16px">EnterCollab</span>
         </div>
         <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:32px;text-align:center">
           <h2 style="margin:0 0 8px;font-size:18px;font-weight:600;color:#111827">Verify your email</h2>

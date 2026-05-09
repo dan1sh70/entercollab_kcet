@@ -60,9 +60,9 @@ export default function Rightbar() {
   if (!user) return null;
 
   return (
-    <div className="space-y-6 pr-2">
+    <div className="space-y-5 pr-2">
       {/* Profile Summary Card */}
-      <div className="bg-white rounded-[2rem] p-6 shadow-xl shadow-slate-100/50 border border-slate-100">
+      <div className="panel-surface p-5">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -82,7 +82,7 @@ export default function Rightbar() {
         </div>
 
         {/* Trust Score */}
-        <div className="bg-slate-50 rounded-xl px-4 py-2.5 flex items-center justify-between mb-5">
+        <div className="rounded-2xl border border-slate-200/80 bg-slate-50/80 px-4 py-3 flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <i className="fa-solid fa-star text-amber-500 text-sm" />
             <span className="font-extrabold text-slate-800">{user.totalTrustPoints ?? 0}</span>
@@ -116,7 +116,7 @@ export default function Rightbar() {
 
       {/* Connect with Others */}
       {suggestedUsers.length > 0 && (
-        <div className="bg-white rounded-[2rem] p-6 shadow-xl shadow-slate-100/50 border border-slate-100">
+        <div className="panel-surface p-5">
           <h3 className="font-bold text-slate-800 text-sm mb-4">Connect with Others</h3>
           <div className="space-y-3">
             {suggestedUsers.map((person) => (
@@ -141,7 +141,7 @@ export default function Rightbar() {
       )}
 
       {/* AI Research Summary */}
-      <div className="bg-gradient-to-br from-slate-50 to-indigo-50/50 rounded-[2rem] p-5 border border-indigo-100/50">
+      <div className="rounded-[1.75rem] border border-indigo-100/70 bg-gradient-to-br from-slate-50 to-indigo-50/60 p-5 shadow-sm">
         <div className="flex items-center gap-2 mb-3">
           <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[10px]">
             <i className="fa-solid fa-robot" />
@@ -155,7 +155,7 @@ export default function Rightbar() {
           </div>
           <div>
             <p className="text-xs font-medium text-slate-600 leading-snug">
-              Welcome to InterCollab! Connect with researchers and start collaborating on exciting projects.
+              Welcome to EnterCollab! Connect with researchers and start collaborating on exciting projects.
             </p>
           </div>
         </div>
@@ -169,11 +169,11 @@ export default function Rightbar() {
       </div>
 
       {/* Logout */}
-      <div className="pt-4 mt-2 border-t border-slate-100">
+      <div className="pt-4 mt-2 border-t border-slate-200/80">
         <button onClick={logout}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-2xl text-xs font-bold hover:bg-red-100 transition-all group/logout">
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-2xl text-xs font-bold hover:bg-red-100 transition-all group/logout shadow-sm">
           <i className="fa-solid fa-right-from-bracket group-hover/logout:translate-x-0.5 transition-transform" />
-          Sign Out from InterCollab
+          Sign Out from EnterCollab
         </button>
       </div>
     </div>

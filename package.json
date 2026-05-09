@@ -1,5 +1,5 @@
 {
-  "name": "intercollab",
+  "name": "entercollab",
   "private": true,
   "workspaces": ["server", "client"],
   "scripts": {

@@ -1,28 +1,31 @@
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: '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',
+  baseURL: 'https://integrate.api.nvidia.com/v1',
+});
+
 export async function callOpenAI(
   messages: { role: string; content: string }[],
-  temperature = 0.7
+  temperature = 1
 ): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  const model = process.env.OPENAI_MODEL || 'gpt-4o';
-
-  if (!apiKey || apiKey === 'your-openai-api-key') {
-    const lastMsg = messages[messages.length - 1]?.content || '';
-    return `[MOCK AI RESPONSE] Received: "${lastMsg}". Configure OPENAI_API_KEY for real responses.`;
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "minimaxai/minimax-m2.7",
+      messages: messages as any,
+      temperature,
+      top_p: 0.95,
+      max_tokens: 8192,
+    });
+    return completion.choices[0]?.message?.content || '';
+  } catch (error) {
+    console.error('AI Error:', error);
+    throw new Error('AI Service Unavailable');
   }
-
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({ model, messages, temperature }),
-  });
-
-  if (!res.ok) throw new Error('AI Service Unavailable');
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content || '';
 }
 
 export async function chat(message: string, history: { user: string; ai: string }[] = [], context = ''): Promise<string> {
-  const systemPrompt = `You are InterCollab AI, a helpful assistant for university collaboration projects.${context ? ` Context: ${context}` : ''}`;
+  const systemPrompt = `You are EnterCollab AI, a helpful assistant for university collaboration projects.${context ? ` Context: ${context}` : ''}`;  
   const messages: { role: string; content: string }[] = [{ role: 'system', content: systemPrompt }];
 
   for (const msg of history) {
