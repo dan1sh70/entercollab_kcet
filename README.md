@@ -3,20 +3,21 @@
 EnterCollab is a full‑stack collaboration platform built for students, researchers, and academic teams to discover projects, connect with peers, and collaborate on research and technical work. It combines a modern React + Vite frontend with an Express + Prisma backend and realtime features powered by Socket.IO.
 
 Table of contents
-- [Project Overview](#project-overview)
-- [Key Features](#key-features)
-- [Architecture](#architecture)
-- [Getting Started (Local Development)](#getting-started-local-development)
-- [Environment Variables](#environment-variables)
-- [Database & Migrations](#database--migrations)
-- [Realtime / Socket.IO](#realtime--socketio)
-- [AI Assistant Integration](#ai-assistant-integration)
-- [Directory Structure](#directory-structure)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [Security & Privacy Notes](#security--privacy-notes)
-- [Contributing](#contributing)
-- [License](#license)
+- [EnterCollab](#entercollab)
+  - [Project Overview](#project-overview)
+  - [Key Features](#key-features)
+  - [Architecture](#architecture)
+  - [Getting Started (Local Development)](#getting-started-local-development)
+  - [Environment Variables](#environment-variables)
+  - [Database \& Migrations](#database--migrations)
+  - [Realtime / Socket.IO](#realtime--socketio)
+  - [AI Assistant Integration](#ai-assistant-integration)
+  - [Directory Structure](#directory-structure)
+  - [Testing](#testing)
+  - [Deployment](#deployment)
+  - [Security \& Privacy Notes](#security--privacy-notes)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Project Overview
 
@@ -156,9 +157,4 @@ If you want to export or share DB contents, create a sanitized SQL dump (do not 
 This project does not include an explicit license file. Add a `LICENSE` if you plan to open-source it.
 
 ---
-
-If you want, I can also:
-- Add a short `CONTRIBUTING.md` with local dev checks and code style.
-- Create a `server/DB_DUMP_INSTRUCTIONS.md` describing how to safely create and sanitize DB dumps.
-- Add example `.env.example` values to improve onboarding.
 
