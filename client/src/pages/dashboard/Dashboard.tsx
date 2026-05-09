@@ -64,7 +64,7 @@ export default function Dashboard() {
 
         {/* Main Content */}
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 mt-8">
-          <div className="flex flex-col xl:flex-row gap-8">
+          <div className="flex flex-col lg:flex-row gap-8">
             {/* Feed Content */}
             <div className="flex-1 min-w-0 space-y-8">
               {/* Post Input */}
@@ -175,55 +175,6 @@ export default function Dashboard() {
           ))
         )}
             </div>
-
-            {/* Right Sidebar */}
-            <aside className="hidden xl:block w-80 flex-shrink-0 space-y-6">
-              {/* Profile Summary */}
-              <div className="panel-surface p-6 sticky top-20">
-                <div className="flex items-center gap-4 mb-5">
-                  <img src={avatarUrl(user?.name || '', user?.profilePhotoPath)} className="w-14 h-14 rounded-full object-cover border-2 border-indigo-100" />
-                  <div>
-                    <h3 className="font-bold text-slate-900">{user?.name}</h3>
-                    <p className="text-xs text-slate-500">{user?.university || 'Student'}</p>
-                  </div>
-                </div>
-                <div className="space-y-3 pt-4 border-t border-slate-100">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600">Projects</span>
-                    <span className="font-bold text-indigo-600">-</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600">Following</span>
-                    <span className="font-bold text-indigo-600">-</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600">Followers</span>
-                    <span className="font-bold text-indigo-600">-</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Tips */}
-              <div className="panel-surface p-6">
-                <h4 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                  <i className="fa-solid fa-lightbulb text-amber-500" /> Quick Tips
-                </h4>
-                <ul className="space-y-3 text-sm text-slate-600">
-                  <li className="flex gap-2">
-                    <span className="text-indigo-600 flex-shrink-0">•</span>
-                    <span>Join projects that match your skills</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-indigo-600 flex-shrink-0">•</span>
-                    <span>Build your portfolio with real work</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-indigo-600 flex-shrink-0">•</span>
-                    <span>Connect with peers across campuses</span>
-                  </li>
-                </ul>
-              </div>
-            </aside>
           </div>
         </div>
       </div>

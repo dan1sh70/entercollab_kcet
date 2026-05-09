@@ -71,7 +71,7 @@ export default function AppLayout() {
           </main>
 
           {!hideRightSidebar && (
-            <aside className="hidden xl:block w-80 flex-shrink-0 sticky bottom-6 top-auto self-end">
+            <aside className="hidden xl:block w-80 flex-shrink-0 sticky top-6 self-start">
               <Rightbar />
             </aside>
           )}
