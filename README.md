@@ -2,6 +2,11 @@
 
 EnterCollab is a full‑stack collaboration platform built for students, researchers, and academic teams to discover projects, connect with peers, and collaborate on research and technical work. It combines a modern React + Vite frontend with an Express + Prisma backend and realtime features powered by Socket.IO.
 
+
+
+drive link: https://drive.google.com/drive/folders/1ttDxq8qSGF3N7md1NxTAqd7WLlDok1BX?usp=sharing
+
+video and presentation 
 Table of contents
 - [EnterCollab](#entercollab)
   - [Project Overview](#project-overview)
