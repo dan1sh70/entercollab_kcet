@@ -162,9 +162,16 @@ export default function Header({ onToggleMobileSidebar }: { onToggleMobileSideba
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 rounded-xl shadow-sm border border-slate-100/30 bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center p-1">
-              <span className="text-indigo-600 font-bold">IC</span>
-            </div>
+            <img
+              src="/logo.gif"
+              alt="EnterCollab"
+              className="w-10 h-10 rounded-xl shadow-sm border border-slate-100/30 bg-white object-cover p-1"
+              onError={(e) => {
+                const t = e.target as HTMLImageElement;
+                t.onerror = null;
+                t.src = '/favicon-32x32.png';
+              }}
+            />
             <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full border-2 border-white shadow-lg" />
           </div>
           <div>
