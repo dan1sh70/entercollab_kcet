@@ -3,6 +3,7 @@ import prisma from '../config/database.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { emitChatMessage, emitChatRoomsRefresh } from '../services/notificationService.js';
 import { syncProjectChatMembers } from '../services/chatRoomMembers.js';
+import { callOpenAI } from '../services/ai.js';
 
 const router = Router();
 
@@ -199,6 +200,118 @@ router.post('/:roomId/send', authMiddleware, async (req: AuthRequest, res: Respo
   } catch (e: any) {
     res.status(500).json({ error: e.message });
   }
+    // Auto-generate AI response if it's an AI room (fire and forget)
+    if (true) {
+      (async () => {
+        try {
+          const room = await prisma.chatRoom.findUnique({ where: { id: roomId }, select: { isAI: true } });
+          if (room?.isAI === 1) {
+            // Get previous messages for context
+            const recentMsgs = await prisma.message.findMany({
+              where: { chatRoomId: roomId },
+              orderBy: { createdAt: 'desc' },
+              take: 20,
+              include: { user: { select: { id: true } } },
+            });
+
+            // Build conversation history (most recent first, so reverse)
+            const history: { role: string; content: string }[] = [];
+            for (const msg of recentMsgs.reverse()) {
+              history.push({
+                role: msg.userId === req.user!.id ? 'user' : 'assistant',
+                content: msg.content,
+              });
+            }
+
+            const systemPrompt = `You are EnterCollab AI, a helpful assistant for university collaboration, research projects, and academic purposes. You help with:
+  - Research guidance and academic support
+  - Project collaboration assistance
+  - Technical problem-solving
+  - Academic writing tips and presentation advice
+  - Resource recommendations for learning
+  - General academic mentoring
+  /** Get or create AI assistant chat room for user */
+  Be helpful, clear, and professional. Keep responses concise.`;
+
+            const msgs: { role: string; content: string }[] = [
+              { role: 'system', content: systemPrompt },
+              ...history,
+            ];
+
+            const aiResponse = await callOpenAI(msgs);
+
+            // Create a system user for AI responses if it doesn't exist
+            let aiUser = await prisma.user.findFirst({
+              where: { email: 'ai-assistant@entercollab.app' },
+            });
+
+            if (!aiUser) {
+              aiUser = await prisma.user.create({
+                data: {
+                  name: 'AI Assistant',
+                  email: 'ai-assistant@entercollab.app',
+                  password: 'system-ai',
+                  emailVerifiedAt: new Date(),
+                },
+              });
+              // Add to the room
+              await prisma.chatRoomUser.create({
+                data: { chatRoomId: roomId, userId: aiUser.id },
+              });
+            }
+
+            const aiMessage = await prisma.message.create({
+              data: {
+                chatRoomId: roomId,
+                userId: aiUser.id,
+                content: aiResponse,
+              },
+              include: { user: { select: { id: true, name: true, profilePhotoPath: true } } },
+            });
+
+            await emitChatMessage(roomId, aiMessage);
+          }
+        } catch (err) {
+          console.error('AI response generation failed:', err);
+        }
+      })();
+    }
+  router.post('/ai/assistant', authMiddleware, async (req: AuthRequest, res: Response) => {
+    try {
+      const userId = req.user!.id;
+
+      // Find existing AI assistant room for this user
+      let room = await prisma.chatRoom.findFirst({
+        where: {
+          isAI: 1,
+          users: { some: { userId } },
+        },
+        include: {
+          users: { include: { user: { select: { id: true, name: true, profilePhotoPath: true } } } },
+        },
+      });
+
+      // Create new AI assistant room if it doesn't exist
+      if (!room) {
+        room = await prisma.chatRoom.create({
+          data: {
+            name: 'AI Assistant',
+            isAI: 1,
+            users: {
+              create: [{ userId }],
+            },
+          },
+          include: {
+            users: { include: { user: { select: { id: true, name: true, profilePhotoPath: true } } } },
+          },
+        });
+      }
+
+      res.json({ room });
+    } catch (e: any) {
+      res.status(500).json({ error: e.message });
+    }
+  });
 });
 
 export default router;

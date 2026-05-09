@@ -170,6 +170,7 @@ model ChatRoom {
   id        Int      @id @default(autoincrement())
   name      String
   postId    Int?     @map("post_id")
+  isAI      Int      @default(0) @map("is_ai")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
